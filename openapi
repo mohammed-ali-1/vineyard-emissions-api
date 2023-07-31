@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Vineyard Emissions API
+paths:
+  /emissions:
+    post:
+      summary: Create a new emission record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Emission'
+      responses:
+        '201':
+          description: Emission record created
+        '400':
+          description: Bad request
+    get:
+      summary: Get all emission records
+      responses:
+        '200':
+          description: A list of emissions data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emission'
+        '400':
+          description: Bad request
+  /emissions/{id}:
+    get:
+      summary: Get a specific emission record
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Emission record details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Emission'
+        '404':
+          description: Emission record not found
+    put:
+      summary: Update a specific emission record
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Emission'
+      responses:
+        '200':
+          description: Emission record updated
+        '400':
+          description: Bad request
+        '404':
+          description: Emission record not found
+    delete:
+      summary: Delete a specific emission record
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Emission record deleted
+        '404':
+          description: Emission record not found
+components:
+  schemas:
+    Emission:
+      type: object
+      properties:
+        vineyardName:
+          type: string
+        blockID:
+          type: string
+        ownerName:
+          type: string
+        co2Emission:
+          type: number
+          format: float
+        ch4Emission:
+          type: number
+          format: float
+        n2oEmission:
+          type: number
+          format: float
+        electricityBill:
+          type: number
+          format: float
+        fossilFuels:
+          type: number
+          format: float
+        fertilizers:
+          type: number
+          format: float
+        date:
+          type: string
+          format: date
+
